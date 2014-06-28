@@ -7,7 +7,7 @@ class Solution:
         lowlevel = 0
         minindex = 0  
         n = len(gas)
-        for i in range(n):
+        for i in xrange(n):
             left += gas[i] 
             left -= cost[i]
             if (left<lowlevel):
