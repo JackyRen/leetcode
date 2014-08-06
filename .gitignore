@@ -6,3 +6,4 @@ elf-bin
 a.out
 .c9
 .git
+.scripts

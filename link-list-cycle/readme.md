@@ -1,13 +1,13 @@
 #LeetCode
 
-## Anagrams
+## Linked List
 
-transform a word to a string with ascending order charaters 
-which is the unique representation of anagrams
+Guess a magic number that won't appear, and 
+use it as the mark.
+
 
 ### Time
-m is length of string
-O(n*m*log(n))
+O(n)
 
 ### Space
-O(n*m)
+O(1)
