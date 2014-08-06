@@ -1,0 +1,8 @@
+*.swp
+*.o[bj]
+obj
+bin
+elf-bin
+a.out
+.c9
+.git
