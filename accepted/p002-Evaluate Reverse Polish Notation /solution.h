@@ -2,10 +2,13 @@
 #include <functional>
 #include <cassert>
 #include <iostream>
+#include <map>
 
 using namespace std;
 class Solution {
 public:
+    map<string,function<int(int,int)> > calcs;
+    typedef pair<string,function<int(int,int)> > cfp;
     void trim(string &s){
         int i = 0,j=s.length();
         while(s[i]==' ')i++;
@@ -22,34 +25,20 @@ public:
         }
         return s[0]=='-'?-ret:ret;
     }
-    int calc(int a,int b,int op){
-        vector<function<int(int,int)> > calcs ={
-            [](int x,int y){return x+y;},
-            [](int x,int y){return x-y;},
-            [](int x,int y){return x*y;},
-            [](int x,int y){return x/y;}
-        };
-        int ret = calcs[op](a,b);
-        //cout<<a<<" "<<b<<"    "<<op<<" -> "<<ret<<endl;
-        return ret;
-    }
-    int parseChar(const string& s){
-        if(s.length()!=1)
-            return -1;
-        vector<char> chars = {'+','-','*','/'};
-        for(auto i = chars.begin() ; i != chars.end(); ++i){
-            if (s[0] == *i)
-                return i-chars.begin();
-        }
-        return -1;
+    void init(){
+        calcs.insert( cfp("+", [](int x,int y){return x+y;}));
+        calcs.insert( cfp("-", [](int x,int y){return x-y;}));
+        calcs.insert( cfp("*", [](int x,int y){return x*y;}));
+        calcs.insert( cfp("/", [](int x,int y){return x/y;}));
     }
     int evalRPN(vector<string> &tokens) {
+        init();
         vector<int> numberStack;
         for(auto iter = tokens.begin() ; tokens.end()!=iter;++iter){
             trim(*iter);
-            int charId = parseChar(*iter);
+            auto calcIter = calcs.find(*iter);
             //cout<<"*** "<<*iter<<"  "<<charId<<endl;
-            if(charId==-1){
+            if(calcIter==calcs.end()){
                 numberStack.push_back(parseInt(*iter));
             }
             else{
@@ -57,7 +46,7 @@ public:
                 numberStack.pop_back();
                 int a = numberStack.back();
                 numberStack.pop_back();
-                numberStack.push_back(calc(a,b,charId));
+                numberStack.push_back(calcIter->second(a,b));
             }
         }
         assert(numberStack.size()==1);
