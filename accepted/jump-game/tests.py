@@ -1,0 +1,10 @@
+def tests():
+    yield [1]
+    yield [2,0]
+    yield [1,0,0]
+    yield [2,3,1,1,4]
+    yield [3,2,1,0,4]
+    yield [3,2,2,0,4]
+    yield [3,2,1,1,4]
+    yield [3,0,2,0,0]
+    yield [3,0,0,0,0]
